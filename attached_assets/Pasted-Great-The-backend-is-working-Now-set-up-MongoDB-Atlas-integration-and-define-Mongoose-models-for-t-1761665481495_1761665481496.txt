@@ -1,0 +1,57 @@
+Great! The backend is working. Now set up MongoDB Atlas integration and define Mongoose models for the SalesTrackr app.
+
+### Step 1: MongoDB Atlas Setup
+1. Guide me to create a **free MongoDB Atlas cluster** (if I don't have one):
+   - Go to mongodb.com → Atlas → Build a Cluster → Free Tier
+   - Create cluster → Allow access from anywhere (0.0.0.0/0)
+   - Create DB user: username `salestrackr`, password `SecurePass123!`
+   - Get connection string
+
+2. Add to Replit:
+   - In Replit Secrets (lock icon), add:
+     - `MONGODB_URI` = your Atlas connection string (replace <password>)
+
+### Step 2: Backend – Connect to MongoDB
+In `server/index.ts` (or main server file):
+- Import `mongoose`
+- Connect using `process.env.MONGODB_URI`
+- Log "MongoDB connected" on success, error on fail
+- Use `mongoose.connect()` with modern options
+
+### Step 3: Create Mongoose Models (in `server/models/`)
+Create these model files with proper schemas:
+
+1. **User.ts**
+   - name, email (unique), password (hashed), role: "agent" | "admin"
+
+2. **Client.ts**
+   - name, address, lat, lng, region, hasComplaint: Boolean, complaintNote: String, requestedVisit: Boolean
+
+3. **Depot.ts**
+   - name, lat, lng
+   - inspection: { done: Boolean, hsFile: Boolean, housekeeping: Number (1-5), hazLicense: Boolean, stockCounted: Boolean, notes: String }
+
+4. **Visit.ts**
+   - clientId (ref), agentId (ref), checkInTime: Date, checkOutTime: Date (optional)
+
+5. **MissedOrder.ts**
+   - clientId, product: String, reason: String, date: Date
+
+6. **TrainingLog.ts**
+   - agentId, description: String, date: Date
+
+7. **ProductComplaint.ts**
+   - clientId, product: String, comment: String, date: Date
+
+### Step 4: Test Connection
+- Add a route: `GET /api/test-db` that:
+  - Creates a test client
+  - Saves it
+  - Returns { success: true, client }
+- Log any errors
+
+### Final Output:
+- Show all model files
+- Updated server connection code
+- Secret setup instructions
+- How to test `/api/test-db`

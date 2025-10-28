@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import Client from "./models/Client";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Root endpoint - API status
@@ -14,6 +15,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       status: "OK", 
       timestamp: new Date().toISOString() 
     });
+  });
+
+  // Database test endpoint
+  app.get("/api/test-db", async (req, res) => {
+    try {
+      // Create a test client
+      const testClient = new Client({
+        name: "Test Client Inc.",
+        address: "123 Test Street, Test City",
+        lat: 40.7128,
+        lng: -74.0060,
+        region: "North",
+        hasComplaint: false,
+        requestedVisit: true,
+      });
+
+      // Save to database
+      const savedClient = await testClient.save();
+
+      res.json({ 
+        success: true, 
+        message: "Database connection successful!",
+        client: savedClient 
+      });
+    } catch (error: any) {
+      console.error("Database test error:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Database test failed",
+        error: error.message 
+      });
+    }
   });
 
   // Additional API routes will go here

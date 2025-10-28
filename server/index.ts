@@ -4,9 +4,31 @@ import { setupVite, serveStatic, log } from "./vite";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
+import mongoose from "mongoose";
 
 // Load environment variables
 dotenv.config();
+
+// MongoDB Connection
+const connectDB = async () => {
+  try {
+    const mongoURI = process.env.MONGODB_URI;
+    
+    if (!mongoURI) {
+      log('⚠️  MONGODB_URI not found in environment variables. Running without database.');
+      return;
+    }
+
+    await mongoose.connect(mongoURI);
+    log('✅ MongoDB connected successfully');
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error);
+    process.exit(1);
+  }
+};
+
+// Connect to MongoDB
+connectDB();
 
 const app = express();
 
