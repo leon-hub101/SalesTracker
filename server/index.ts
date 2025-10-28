@@ -1,8 +1,18 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import dotenv from "dotenv";
+import cors from "cors";
+import helmet from "helmet";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
+
+// Security and CORS middleware
+app.use(helmet());
+app.use(cors());
 
 declare module 'http' {
   interface IncomingMessage {
