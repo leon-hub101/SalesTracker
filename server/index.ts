@@ -23,11 +23,12 @@ const connectDB = async () => {
     log('✅ MongoDB connected successfully');
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
-    process.exit(1);
+    log('⚠️  Server will continue running without database connection.');
+    log('⚠️  To fix: Add 0.0.0.0/0 to Network Access in MongoDB Atlas.');
   }
 };
 
-// Connect to MongoDB
+// Connect to MongoDB (non-blocking)
 connectDB();
 
 const app = express();

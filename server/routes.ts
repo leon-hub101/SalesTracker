@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import Client from "./models/Client";
+import mongoose from "mongoose";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Root endpoint - API status
@@ -11,9 +12,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Health check endpoint
   app.get("/api/health", (req, res) => {
+    const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
     res.json({ 
       status: "OK", 
-      timestamp: new Date().toISOString() 
+      timestamp: new Date().toISOString(),
+      database: dbStatus
     });
   });
 
