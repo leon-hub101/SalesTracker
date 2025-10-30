@@ -20,7 +20,13 @@ const connectDB = async () => {
     }
 
     await mongoose.connect(mongoURI);
-    log('✅ MongoDB connected successfully');
+    const dbName = mongoose.connection.db?.databaseName || 'unknown';
+    log(`✅ MongoDB connected successfully to database: ${dbName}`);
+    
+    if (dbName === 'admin') {
+      log('⚠️  WARNING: Connected to "admin" database. M0 Free Tier cannot write to this database!');
+      log('⚠️  Fix: Add /salestrackr to your connection string before the ? character');
+    }
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
     log('⚠️  Server will continue running without database connection.');
