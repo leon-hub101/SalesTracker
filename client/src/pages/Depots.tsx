@@ -145,7 +145,7 @@ export default function Depots() {
             setFormData({ ...formData, inspection: { ...formData.inspection, done: checked as boolean } })
           }
         />
-        <Label htmlFor="done">Inspection Done</Label>
+        <Label htmlFor="done" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Inspection Done</Label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -155,10 +155,10 @@ export default function Depots() {
             setFormData({ ...formData, inspection: { ...formData.inspection, hsFile: checked as boolean } })
           }
         />
-        <Label htmlFor="hsFile">H&S File Present</Label>
+        <Label htmlFor="hsFile" className="text-xs uppercase tracking-widest font-medium text-foreground/70">H&S File Present</Label>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="housekeeping">Housekeeping (1-5)</Label>
+        <Label htmlFor="housekeeping" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Housekeeping (1-5)</Label>
         <Input
           id="housekeeping"
           type="number"
@@ -178,7 +178,7 @@ export default function Depots() {
             setFormData({ ...formData, inspection: { ...formData.inspection, hazLicense: checked as boolean } })
           }
         />
-        <Label htmlFor="hazLicense">Hazmat License</Label>
+        <Label htmlFor="hazLicense" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Hazmat License</Label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -188,10 +188,10 @@ export default function Depots() {
             setFormData({ ...formData, inspection: { ...formData.inspection, stockCounted: checked as boolean } })
           }
         />
-        <Label htmlFor="stockCounted">Stock Counted</Label>
+        <Label htmlFor="stockCounted" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Stock Counted</Label>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="notes">Notes</Label>
+        <Label htmlFor="notes" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Notes</Label>
         <Textarea
           id="notes"
           value={formData.inspection.notes}
@@ -224,7 +224,7 @@ export default function Depots() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Name</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -234,7 +234,7 @@ export default function Depots() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="lat">Latitude</Label>
+                  <Label htmlFor="lat" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Latitude</Label>
                   <Input
                     id="lat"
                     type="number"
@@ -244,7 +244,7 @@ export default function Depots() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lng">Longitude</Label>
+                  <Label htmlFor="lng" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Longitude</Label>
                   <Input
                     id="lng"
                     type="number"

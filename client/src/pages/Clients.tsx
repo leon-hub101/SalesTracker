@@ -144,7 +144,7 @@ export default function Clients() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Name</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -153,7 +153,7 @@ export default function Clients() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
+                <Label htmlFor="address" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Address</Label>
                 <Input
                   id="address"
                   value={formData.address}
@@ -163,7 +163,7 @@ export default function Clients() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="lat">Latitude</Label>
+                  <Label htmlFor="lat" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Latitude</Label>
                   <Input
                     id="lat"
                     type="number"
@@ -174,7 +174,7 @@ export default function Clients() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lng">Longitude</Label>
+                  <Label htmlFor="lng" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Longitude</Label>
                   <Input
                     id="lng"
                     type="number"
@@ -186,7 +186,7 @@ export default function Clients() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="region">Region</Label>
+                <Label htmlFor="region" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Region</Label>
                 <Input
                   id="region"
                   value={formData.region}

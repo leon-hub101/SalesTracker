@@ -122,7 +122,7 @@ export default function TrainingLogs() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Description</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
@@ -132,7 +132,7 @@ export default function TrainingLogs() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="date">Date</Label>
+                <Label htmlFor="date" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Date</Label>
                 <Input
                   id="date"
                   type="date"

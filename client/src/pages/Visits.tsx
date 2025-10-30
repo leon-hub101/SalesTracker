@@ -142,7 +142,7 @@ export default function Visits() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Client</Label>
+                <Label className="text-xs uppercase tracking-widest font-medium text-foreground/70">Client</Label>
                 <Select value={selectedClientId} onValueChange={setSelectedClientId}>
                   <SelectTrigger data-testid="select-client">
                     <SelectValue placeholder="Select a client" />

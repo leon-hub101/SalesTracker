@@ -179,7 +179,7 @@ export default function Complaints() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="client">Client (Optional)</Label>
+                <Label htmlFor="client" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Client (Optional)</Label>
                 <Select value={formData.clientId} onValueChange={(value) => setFormData({ ...formData, clientId: value })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a client" />
@@ -195,7 +195,7 @@ export default function Complaints() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="product">Product</Label>
+                <Label htmlFor="product" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Product</Label>
                 <Input
                   id="product"
                   value={formData.product}
@@ -204,7 +204,7 @@ export default function Complaints() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="comment">Comment</Label>
+                <Label htmlFor="comment" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Comment</Label>
                 <Textarea
                   id="comment"
                   value={formData.comment}
@@ -214,7 +214,7 @@ export default function Complaints() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="date">Date</Label>
+                <Label htmlFor="date" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Date</Label>
                 <Input
                   id="date"
                   type="date"
@@ -242,7 +242,7 @@ export default function Complaints() {
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="edit-client">Client (Optional)</Label>
+              <Label htmlFor="edit-client" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Client (Optional)</Label>
               <Select value={formData.clientId} onValueChange={(value) => setFormData({ ...formData, clientId: value })}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a client" />
@@ -258,7 +258,7 @@ export default function Complaints() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-product">Product</Label>
+              <Label htmlFor="edit-product" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Product</Label>
               <Input
                 id="edit-product"
                 value={formData.product}
@@ -266,7 +266,7 @@ export default function Complaints() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-comment">Comment</Label>
+              <Label htmlFor="edit-comment" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Comment</Label>
               <Textarea
                 id="edit-comment"
                 value={formData.comment}
@@ -274,7 +274,7 @@ export default function Complaints() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-date">Date</Label>
+              <Label htmlFor="edit-date" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Date</Label>
               <Input
                 id="edit-date"
                 type="date"

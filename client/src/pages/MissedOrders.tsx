@@ -136,7 +136,7 @@ export default function MissedOrders() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="client">Client (Optional)</Label>
+                <Label htmlFor="client" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Client (Optional)</Label>
                 <Select value={formData.clientId} onValueChange={(value) => setFormData({ ...formData, clientId: value })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a client" />
@@ -152,7 +152,7 @@ export default function MissedOrders() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="product">Product</Label>
+                <Label htmlFor="product" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Product</Label>
                 <Input
                   id="product"
                   value={formData.product}
@@ -161,7 +161,7 @@ export default function MissedOrders() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="reason">Reason</Label>
+                <Label htmlFor="reason" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Reason</Label>
                 <Textarea
                   id="reason"
                   value={formData.reason}
@@ -170,7 +170,7 @@ export default function MissedOrders() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="date">Date</Label>
+                <Label htmlFor="date" className="text-xs uppercase tracking-widest font-medium text-foreground/70">Date</Label>
                 <Input
                   id="date"
                   type="date"
