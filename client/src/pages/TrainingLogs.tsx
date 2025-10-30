@@ -102,11 +102,11 @@ export default function TrainingLogs() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Training Logs</h1>
-          <p className="text-muted-foreground">Track your training activities</p>
+          <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide">Training Logs</h1>
+          <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Track your training activities</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -152,21 +152,21 @@ export default function TrainingLogs() {
         </Dialog>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {trainingLogsData?.trainingLogs?.map((log) => (
           <Card key={log._id}>
-            <CardHeader>
+            <CardHeader className="p-8 pb-4">
               <CardTitle className="flex justify-between items-start">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <BookOpen className="w-5 h-5 text-primary" />
-                  <span className="text-base">{log.agent.name}</span>
+                  <span className="text-lg font-serif font-light">{log.agent.name}</span>
                 </div>
                 <Button size="icon" variant="ghost" onClick={() => handleDelete(log._id)}>
                   <Trash2 className="w-4 h-4" />
                 </Button>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="px-8 pb-8 space-y-3">
               <p className="text-sm">{log.description}</p>
               <p className="text-sm text-muted-foreground">
                 {formatDate(log.date)}

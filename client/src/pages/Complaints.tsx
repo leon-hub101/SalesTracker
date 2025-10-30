@@ -159,11 +159,11 @@ export default function Complaints() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Product Complaints</h1>
-          <p className="text-muted-foreground">Track and manage product issues</p>
+          <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide">Product Complaints</h1>
+          <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Track and manage product issues</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -292,14 +292,14 @@ export default function Complaints() {
         </DialogContent>
       </Dialog>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {complaintsData?.complaints?.map((complaint) => (
           <Card key={complaint._id}>
-            <CardHeader>
+            <CardHeader className="p-8 pb-4">
               <CardTitle className="flex justify-between items-start">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <FileText className="w-5 h-5 text-destructive" />
-                  <span>{complaint.product}</span>
+                  <span className="text-lg font-serif font-light">{complaint.product}</span>
                 </div>
                 <div className="flex gap-1">
                   <Button size="icon" variant="ghost" onClick={() => openEditDialog(complaint)}>
@@ -311,10 +311,10 @@ export default function Complaints() {
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="px-8 pb-8 space-y-3">
               {complaint.client && (
-                <p className="text-sm">
-                  <span className="font-medium">Client:</span> {complaint.client.name}
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-medium text-foreground">Client:</span> {complaint.client.name}
                 </p>
               )}
               <p className="text-sm">{complaint.comment}</p>

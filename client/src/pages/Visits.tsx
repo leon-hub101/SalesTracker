@@ -11,13 +11,15 @@ import { queryClient, apiRequest } from '@/lib/queryClient';
 
 interface Visit {
   _id: string;
-  client: {
+  clientId: {
     _id: string;
     name: string;
+    address: string;
   };
-  agent: {
+  agentId: {
     _id: string;
     name: string;
+    email: string;
   };
   checkInTime: string;
   checkOutTime?: string;
@@ -120,11 +122,11 @@ export default function Visits() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Visits</h1>
-          <p className="text-muted-foreground">Track your client visits</p>
+          <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide">Visits</h1>
+          <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Track your client visits</p>
         </div>
         <Dialog open={isCheckInOpen} onOpenChange={setIsCheckInOpen}>
           <DialogTrigger asChild>
@@ -171,10 +173,10 @@ export default function Visits() {
 
       {activeVisit && (
         <Card className="border-primary bg-primary/5">
-          <CardHeader>
+          <CardHeader className="p-8 pb-4">
             <CardTitle className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-primary" />
+              <span className="flex items-center gap-3 text-sm uppercase tracking-widest font-medium text-foreground/70">
+                <Clock className="w-4 h-4 text-primary" />
                 Active Visit
               </span>
               <Button
@@ -187,9 +189,9 @@ export default function Visits() {
               </Button>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <p className="font-medium text-lg">{activeVisit.clientId?.name || 'Unknown Client'}</p>
+          <CardContent className="px-8 pb-8">
+            <div className="space-y-3">
+              <p className="text-2xl font-serif font-light">{activeVisit.clientId?.name || 'Unknown Client'}</p>
               <p className="text-sm text-muted-foreground">
                 Started: {formatDateTime(activeVisit.checkInTime)}
               </p>
@@ -201,19 +203,19 @@ export default function Visits() {
         </Card>
       )}
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {visitsData?.visits?.map((visit) => (
-          <Card key={visit._id} data-testid={`card-visit-${visit._id}`}>
-            <CardContent className="flex items-center justify-between p-6">
+          <Card key={visit._id} data-testid={`card-visit-${visit._id}`} className="border">
+            <CardContent className="flex items-center justify-between p-8">
               <div className="flex-1">
-                <h3 className="font-semibold text-lg">{visit.clientId?.name || 'Unknown Client'}</h3>
-                <p className="text-sm text-muted-foreground">Agent: {visit.agentId?.name || 'Unknown Agent'}</p>
-                <div className="flex gap-4 mt-2">
-                  <p className="text-sm">
+                <h3 className="text-lg font-serif font-light">{visit.clientId?.name || 'Unknown Client'}</h3>
+                <p className="text-sm text-muted-foreground mt-1">Agent: {visit.agentId?.name || 'Unknown Agent'}</p>
+                <div className="flex gap-6 mt-3">
+                  <p className="text-sm text-muted-foreground">
                     <span className="font-medium">Check-in:</span> {formatDateTime(visit.checkInTime)}
                   </p>
                   {visit.checkOutTime && (
-                    <p className="text-sm">
+                    <p className="text-sm text-muted-foreground">
                       <span className="font-medium">Check-out:</span> {formatDateTime(visit.checkOutTime)}
                     </p>
                   )}
@@ -222,15 +224,15 @@ export default function Visits() {
               <div className="text-right">
                 {visit.checkOutTime ? (
                   <>
-                    <span className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-3 py-1 text-sm font-medium text-green-800 dark:text-green-300">
+                    <span className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-4 py-1.5 text-xs font-medium text-green-800 dark:text-green-300 uppercase tracking-wider">
                       Completed
                     </span>
                     <p className="text-sm text-muted-foreground mt-2">
-                      Duration: {calculateDuration(visit.checkInTime, visit.checkOutTime)}
+                      {calculateDuration(visit.checkInTime, visit.checkOutTime)}
                     </p>
                   </>
                 ) : (
-                  <span className="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/30 px-3 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300">
+                  <span className="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/30 px-4 py-1.5 text-xs font-medium text-yellow-800 dark:text-yellow-300 uppercase tracking-wider">
                     In Progress
                   </span>
                 )}

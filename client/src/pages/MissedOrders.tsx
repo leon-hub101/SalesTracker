@@ -116,11 +116,11 @@ export default function MissedOrders() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Missed Orders</h1>
-          <p className="text-muted-foreground">Track missed sales opportunities</p>
+          <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide">Missed Orders</h1>
+          <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Track missed sales opportunities</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -190,28 +190,28 @@ export default function MissedOrders() {
         </Dialog>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {missedOrdersData?.missedOrders?.map((order) => (
           <Card key={order._id}>
-            <CardHeader>
+            <CardHeader className="p-8 pb-4">
               <CardTitle className="flex justify-between items-start">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <AlertCircle className="w-5 h-5 text-destructive" />
-                  <span>{order.product}</span>
+                  <span className="text-lg font-serif font-light">{order.product}</span>
                 </div>
                 <Button size="icon" variant="ghost" onClick={() => handleDelete(order._id)}>
                   <Trash2 className="w-4 h-4" />
                 </Button>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="px-8 pb-8 space-y-3">
               {order.client && (
-                <p className="text-sm">
-                  <span className="font-medium">Client:</span> {order.client.name}
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-medium text-foreground">Client:</span> {order.client.name}
                 </p>
               )}
-              <p className="text-sm">
-                <span className="font-medium">Reason:</span> {order.reason}
+              <p className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Reason:</span> {order.reason}
               </p>
               <p className="text-sm text-muted-foreground">
                 {formatDate(order.date)}

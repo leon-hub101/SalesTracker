@@ -204,11 +204,11 @@ export default function Depots() {
   );
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Depots</h1>
-          <p className="text-muted-foreground">Manage depot locations and inspections</p>
+          <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide">Depots</h1>
+          <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Manage depot locations and inspections</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -320,12 +320,12 @@ export default function Depots() {
         </DialogContent>
       </Dialog>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {depotsData?.depots?.map((depot) => (
           <Card key={depot._id}>
-            <CardHeader>
+            <CardHeader className="p-8 pb-4">
               <CardTitle className="flex justify-between items-start">
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-3 text-lg font-serif font-light">
                   <Building2 className="w-5 h-5" />
                   {depot.name}
                 </span>
@@ -339,12 +339,12 @@ export default function Depots() {
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <p className="text-sm">
-                <span className="font-medium">Coordinates:</span> {depot.lat.toFixed(4)}, {depot.lng.toFixed(4)}
+            <CardContent className="px-8 pb-8 space-y-3">
+              <p className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Coordinates:</span> {depot.lat.toFixed(4)}, {depot.lng.toFixed(4)}
               </p>
-              <div className="border-t pt-3">
-                <p className="font-medium mb-2">Inspection Status</p>
+              <div className="border-t pt-3 mt-4">
+                <p className="font-medium mb-3 text-sm uppercase tracking-widest text-foreground/70">Inspection Status</p>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>✓ Inspection: {depot.inspection.done ? 'Done' : 'Pending'}</div>
                   <div>✓ H&S File: {depot.inspection.hsFile ? 'Yes' : 'No'}</div>
