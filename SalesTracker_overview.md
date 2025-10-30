@@ -132,17 +132,29 @@ salestrackr/
 ├── server/                          # Backend Express application
 │   ├── index.ts                     # Main server file
 │   │   └── MongoDB connection
-│   │   └── Express middleware setup
+│   │   └── Express middleware setup (helmet, cors, session)
 │   │   └── Vite integration
 │   │   └── Server initialization
 │   │
-│   ├── routes.ts                    # API route definitions
-│   │   └── GET  /                   # API status
-│   │   └── GET  /api/health         # Health check
-│   │   └── GET  /api/test-db        # Database test
-│   │   └── ... (more routes to be added)
+│   ├── routes.ts                    # Complete API route definitions
+│   │   └── Authentication routes (register, login, logout, me)
+│   │   └── Client CRUD routes (list, get, create, update, delete)
+│   │   └── Visit tracking routes (list, get, check-in, check-out, active)
+│   │   └── Depot CRUD routes (list, get, create, update, delete)
+│   │   └── Missed Order routes (list, get, create, delete)
+│   │   └── Training Log routes (list, get, create, delete)
+│   │   └── Product Complaint routes (list, get, create, update, delete)
+│   │   └── Zod validation on all request bodies
 │   │
-│   ├── storage.ts                   # Storage interface
+│   ├── middleware/                  # Express middleware
+│   │   └── auth.ts                  # Authentication middleware
+│   │       └── requireAuth          # Protects routes requiring authentication
+│   │       └── requireAdmin         # Protects admin-only routes
+│   │
+│   ├── types.ts                     # TypeScript type definitions
+│   │   └── Session types with userId and userRole
+│   │
+│   ├── storage.ts                   # Storage interface (legacy - not used)
 │   │   └── IStorage interface       # CRUD operations interface
 │   │   └── MemStorage class         # In-memory implementation
 │   │
@@ -282,78 +294,148 @@ salestrackr/
 
 ## API Endpoints
 
-### Current Endpoints
-
-#### System
+### System Endpoints (Public)
 ```
 GET  /                       # API status check
 GET  /api/health             # Health check + DB status
 GET  /api/test-db            # Database connection test
 ```
 
-### Planned API Routes
-
-#### Authentication
+### Authentication Endpoints (Public)
 ```
-POST   /api/auth/register    # User registration
-POST   /api/auth/login       # User login
-POST   /api/auth/logout      # User logout
-GET    /api/auth/me          # Get current user
+POST   /api/auth/register    # User registration - Creates new user account
+POST   /api/auth/login       # User login - Returns user session
+POST   /api/auth/logout      # User logout - Destroys session
+GET    /api/auth/me          # Get current user - Requires authentication
 ```
 
-#### Clients
+**Security Features:**
+- Password hashing with bcrypt (10 rounds)
+- Session regeneration on login to prevent session fixation attacks
+- Session destruction on logout
+- HttpOnly cookies for session management
+
+### Client Management (Protected - Requires Authentication)
 ```
-GET    /api/clients          # List all clients
-GET    /api/clients/:id      # Get client by ID
-POST   /api/clients          # Create new client
-PUT    /api/clients/:id      # Update client
-DELETE /api/clients/:id      # Delete client
-GET    /api/clients/nearby   # Get clients near location (geospatial)
+GET    /api/clients                 # List all clients
+  Query params: ?region=North&hasComplaint=true&requestedVisit=false
+  
+GET    /api/clients/:id             # Get client by ID
+POST   /api/clients                 # Create new client
+  Body: { name, address, lat, lng, region, hasComplaint?, complaintNote?, requestedVisit? }
+  
+PATCH  /api/clients/:id             # Update client
+  Body: { name?, address?, lat?, lng?, region?, hasComplaint?, complaintNote?, requestedVisit? }
+  
+DELETE /api/clients/:id             # Delete client
 ```
 
-#### Visits
+### Visit Tracking (Protected - Requires Authentication)
 ```
-GET    /api/visits           # List visits (with filters)
-GET    /api/visits/:id       # Get visit by ID
-POST   /api/visits/check-in  # Check in to client location
-POST   /api/visits/check-out # Check out from client
-GET    /api/visits/active    # Get current active visit
-GET    /api/visits/history   # Visit history for agent
-```
-
-#### Depots
-```
-GET    /api/depots           # List all depots
-GET    /api/depots/:id       # Get depot by ID
-POST   /api/depots           # Create depot
-PUT    /api/depots/:id       # Update depot
-PUT    /api/depots/:id/inspection  # Update inspection data
-DELETE /api/depots/:id       # Delete depot
+GET    /api/visits                  # List all visits
+  Query params: ?agentId=xxx&clientId=xxx&active=true
+  
+GET    /api/visits/:id              # Get visit by ID (populated with client & agent details)
+POST   /api/visits/check-in         # Check in to client location
+  Body: { clientId }
+  
+POST   /api/visits/check-out        # Check out from client (ownership verified)
+  Body: { visitId }
+  
+GET    /api/visits/active           # Get current user's active visit (no check-out time)
 ```
 
-#### Missed Orders
+**Visit Security:**
+- Users can only check out their own visits
+- Active visits are automatically filtered by authenticated user
+
+### Depot Management (Protected - Requires Authentication)
 ```
-GET    /api/missed-orders    # List missed orders
-GET    /api/missed-orders/:id  # Get missed order by ID
-POST   /api/missed-orders    # Log missed order
-DELETE /api/missed-orders/:id  # Delete missed order
+GET    /api/depots                  # List all depots
+GET    /api/depots/:id              # Get depot by ID
+POST   /api/depots                  # Create depot
+  Body: { name, lat, lng, inspection }
+  
+PATCH  /api/depots/:id              # Update depot (including inspection data)
+  Body: { name?, lat?, lng?, inspection? }
+  
+DELETE /api/depots/:id              # Delete depot
 ```
 
-#### Training Logs
-```
-GET    /api/training         # List training logs
-GET    /api/training/:id     # Get training log by ID
-POST   /api/training         # Create training log
-DELETE /api/training/:id     # Delete training log
+**Inspection Object:**
+```typescript
+{
+  done: boolean,           // Inspection completed
+  hsFile: boolean,         // Health & Safety file present
+  housekeeping: number,    // Rating 1-5
+  hazLicense: boolean,     // Hazardous materials license
+  stockCounted: boolean,   // Stock count completed
+  notes: string            // Additional notes
+}
 ```
 
-#### Product Complaints
+### Missed Orders (Protected - Requires Authentication)
 ```
-GET    /api/complaints       # List complaints
-GET    /api/complaints/:id   # Get complaint by ID
-POST   /api/complaints       # Submit complaint
-PUT    /api/complaints/:id   # Update complaint
-DELETE /api/complaints/:id   # Delete complaint
+GET    /api/missed-orders           # List all missed orders
+  Query params: ?clientId=xxx
+  
+GET    /api/missed-orders/:id       # Get missed order by ID
+POST   /api/missed-orders           # Log missed order
+  Body: { clientId?, product, reason, date }
+  
+DELETE /api/missed-orders/:id       # Delete missed order
+```
+
+### Training Logs (Protected - Requires Authentication)
+```
+GET    /api/training-logs           # List all training logs
+  Query params: ?agentId=xxx
+  
+GET    /api/training-logs/:id       # Get training log by ID
+POST   /api/training-logs           # Create training log
+  Body: { agentId, description, date }
+  
+DELETE /api/training-logs/:id       # Delete training log
+```
+
+### Product Complaints (Protected - Requires Authentication)
+```
+GET    /api/product-complaints      # List all complaints
+  Query params: ?clientId=xxx
+  
+GET    /api/product-complaints/:id  # Get complaint by ID
+POST   /api/product-complaints      # Submit complaint
+  Body: { clientId?, product, comment, date }
+  
+PATCH  /api/product-complaints/:id  # Update complaint
+  Body: { clientId?, product?, comment?, date? }
+  
+DELETE /api/product-complaints/:id  # Delete complaint
+```
+
+### API Response Formats
+
+**Success Response:**
+```json
+{
+  "client": { ...data },
+  "message": "Client created successfully"
+}
+```
+
+**Error Response:**
+```json
+{
+  "error": "Error message",
+  "details": [...] // For validation errors
+}
+```
+
+**Authentication Error:**
+```json
+{
+  "error": "Authentication required"
+}
 ```
 
 ---
@@ -502,14 +584,33 @@ SESSION_SECRET=<strong-secret-key>
 
 ---
 
-## Future Enhancements
+## Development Status
 
-### Phase 1: Core Features (In Progress)
-- [ ] Complete REST API for all models
-- [ ] User authentication system
-- [ ] Client management UI
-- [ ] Visit tracking UI
-- [ ] Mobile-responsive design
+### ✅ Phase 1: REST API & Backend (COMPLETED)
+- [x] Complete REST API for all 7 models
+- [x] User authentication system with session security
+- [x] Zod validation schemas for all API requests
+- [x] Authentication middleware protecting all routes
+- [x] Authorization checks for sensitive operations (visit check-out)
+- [x] MongoDB Atlas integration with Mongoose
+- [x] Session regeneration to prevent session fixation attacks
+- [x] Comprehensive error handling and validation
+
+**Next Phase:** Frontend UI Development
+
+### Phase 2: Frontend UI (In Progress)
+- [ ] Authentication pages (Login, Register)
+- [ ] Dashboard with key metrics and charts
+- [ ] Client management UI (list, create, edit, delete)
+- [ ] Visit tracking UI with check-in/check-out
+- [ ] Depot management UI with inspection forms
+- [ ] Missed orders interface
+- [ ] Training logs interface
+- [ ] Product complaints interface
+- [ ] Mobile-responsive design with bottom navigation
+- [ ] Dark mode support
+
+## Future Enhancements
 
 ### Phase 2: Advanced Features
 - [ ] **Geolocation Integration**
@@ -569,18 +670,31 @@ The application uses a single server for both frontend and backend:
 
 ### Session Management
 ```typescript
-// Planned implementation
+// Current implementation (server/index.ts)
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
+import memorystore from 'memorystore';
+
+const MemoryStore = memorystore(session);
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  secret: process.env.SESSION_SECRET || 'dev-secret-key',
+  store: new MemoryStore({
+    checkPeriod: 86400000 // 24 hours
+  }),
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: process.env.NODE_ENV === 'production' }
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+  }
 }));
 ```
+
+**Production Recommendations:**
+- Replace MemoryStore with MongoStore or Redis for production
+- Set strong SESSION_SECRET environment variable
+- Enable secure cookies with HTTPS
 
 ### Geolocation Strategy
 - **Browser API:** `navigator.geolocation` for client-side location
@@ -626,7 +740,7 @@ Error: command insert not found
 **Platform:** Replit
 **Database:** MongoDB Atlas (ClusterForSalesTracker)
 **Created:** October 2025
-**Last Updated:** October 30, 2025
+**Last Updated:** October 30, 2025 - REST API Complete
 
 ### Key Maintenance Tasks
 - [ ] Rotate `SESSION_SECRET` periodically
