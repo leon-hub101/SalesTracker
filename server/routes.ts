@@ -28,16 +28,12 @@ import TrainingLog from "./models/TrainingLog";
 import ProductComplaint from "./models/ProductComplaint";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Root endpoint - API status
-  app.get("/", (req, res) => {
-    res.json({ message: "SalesTrackr API is running!" });
-  });
-
   // Health check endpoint
   app.get("/api/health", (req, res) => {
     const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
     res.json({
       status: "OK",
+      message: "SalesTrackr API is running!",
       timestamp: new Date().toISOString(),
       database: dbStatus
     });
