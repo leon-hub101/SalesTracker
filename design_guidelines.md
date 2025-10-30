@@ -1,200 +1,246 @@
-# SalesTrackr Design Guidelines
+# SalesTrackr Luxury Edition - Design Guidelines
 
-## Design Approach
+## Design Philosophy
 
-**Selected Approach**: Design System (Material Design) with CRM References
-
-**Justification**: SalesTrackr is a utility-focused productivity tool requiring data clarity, efficient workflows, and consistent patterns. The application prioritizes quick data entry, dashboard clarity, and mobile-first field use over visual experimentation.
-
-**Key References**: Salesforce Mobile, HubSpot CRM, Pipedrive - emphasizing clean data visualization, quick-action interfaces, and mobile optimization for field sales representatives.
+**Hybrid Approach**: Material Design functionality + Jo Malone London aesthetic = British luxury minimalism meets enterprise CRM efficiency.
 
 **Core Principles**:
-1. **Speed First**: Minimize clicks to log visits and update client data
-2. **Scan-ability**: Dense information presented clearly for dashboard views
-3. **Mobile Priority**: Field reps access on-the-go; thumb-friendly interactions
-4. **Data Confidence**: Clear visual feedback for all CRUD operations
+- Refined Efficiency: Speed without sacrificing elegance
+- Breathing Room: Generous whitespace elevates data
+- British Minimalism: Clean lines, serif typography, sharp corners
+- Understated Luxury: Sophistication through restraint
 
 ---
 
 ## Typography
 
-**Font Family**: Inter (Google Fonts) - optimized for data-dense interfaces
-- Primary: Inter (400, 500, 600, 700)
-- Monospace: JetBrains Mono for numerical data
+**Font Stack**:
+- **Display/Headers**: Cormorant Garamond (400/500/600/700) - elegance & luxury
+- **Body/Data**: Inter (400/500/600) - clarity & scanning
+- **Monospace**: JetBrains Mono - numerical precision
 
 **Hierarchy**:
-- Dashboard Headers: text-2xl font-semibold (24px)
-- Section Titles: text-lg font-medium (18px)
-- Data Labels: text-sm font-medium uppercase tracking-wide (14px)
-- Body Text: text-base (16px)
-- Supporting Text: text-sm text-gray-600 (14px)
-- Data Values: text-lg font-semibold (18px) - high contrast
-- Mobile Headers: text-xl (20px) for thumb reach
+```css
+Page Titles: text-4xl font-light tracking-wide Cormorant (48px)
+Dashboard Metrics: text-5xl font-light Cormorant (56px)
+Section Headers: text-2xl font-normal Cormorant (30px)
+Subsection Labels: text-lg font-medium Inter uppercase tracking-widest (18px)
+Body Text: text-base Inter (16px)
+Data Values: text-xl font-semibold Inter (20px)
+Supporting: text-sm Inter (14px)
+Micro Copy: text-xs Inter uppercase tracking-wider (12px)
+```
+
+**Treatment**: Generous tracking on uppercase (tracking-widest), leading-relaxed for body, leading-tight for display numbers.
 
 ---
 
-## Layout System
+## Layout & Spacing
 
-**Spacing Primitives**: Tailwind units of **2, 4, 6, 8, 12, 16**
-- Component padding: p-4, p-6
-- Card spacing: space-y-4
-- Section gaps: gap-6, gap-8
-- Dashboard margins: m-8, m-12
-- Mobile: Reduce to p-4, gap-4
+**Spacing Scale**: 4, 8, 12, 16, 24, 32 (Tailwind units)
+- Component padding: p-8, p-12
+- Section gaps: gap-12, gap-16
+- Page margins: mx-16, my-24 (desktop) | mx-6, p-6 (mobile)
 
 **Grid System**:
-- Desktop Dashboard: 12-column grid (grid-cols-12)
-- Tablet: 8-column grid (md:grid-cols-8)
-- Mobile: Single column stacking
+- Dashboard: 12-column, gap-8, max-w-7xl (tables only)
+- Metric Cards: grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12
+- Content: max-w-6xl (default) | max-w-xl (forms) | max-w-prose (reading)
 
-**Container Strategy**:
-- Dashboard main: max-w-7xl mx-auto
-- Forms/Modals: max-w-2xl
-- Data tables: Full width with horizontal scroll on mobile
+**Whitespace Rule**: Double standard spacing between sections. Minimum p-8 on cards. Never edge-to-edge.
 
 ---
 
-## Component Library
+## Color System
+
+**Primary Palette** (Jo Malone inspired):
+```
+Cream: #F8F6F3 (backgrounds)
+Charcoal: #2C2C2C (primary text)
+Gold: #B8976A (accents, CTAs)
+Soft Black: #1A1A1A (headers)
+Warm White: #FFFFFF (cards)
+```
+
+**Functional Colors**:
+```
+Success: #4A7C59 (muted green)
+Warning: #C9A961 (refined gold)
+Error: #9B4444 (understated red)
+Info: #6B7C93 (soft blue-grey)
+```
+
+**Borders & Dividers**: 1px hairlines in rgba(44,44,44,0.1)
+
+---
+
+## Components
 
 ### Navigation
-**Desktop Sidebar** (fixed, 256px width):
-- Logo at top (h-16)
-- Navigation items with icons (Heroicons)
-- Active state: subtle background fill
-- Collapsible on tablet
 
-**Mobile Bottom Navigation** (fixed):
-- 4 primary actions: Dashboard, Clients, Add Visit, Profile
-- Icon + label, active state highlighted
-- Safe area padding for iOS
+**Desktop Sidebar** (280px, fixed):
+- Logo: py-12 generous padding
+- Items: h-14 touch targets, text-sm uppercase tracking-widest
+- Active: Subtle underline or fill
+- Collapsible to icons (tablet)
 
-### Dashboard Cards
-**Metric Cards** (grid-cols-1 md:grid-cols-2 lg:grid-cols-4):
-- Large number display (text-3xl font-bold)
-- Label beneath (text-sm uppercase)
-- Trend indicator (arrow + percentage)
-- Subtle border, rounded-lg
+**Mobile Bottom Nav** (fixed):
+- 4 core actions, icon above label
+- text-xs uppercase tracking-wide
+- Active: Filled icon + indicator
 
-**Activity Feed**:
-- Timeline design with vertical line
-- Icon indicators for visit types
-- Timestamp + client name + action
-- Infinite scroll with "Load More"
+### Cards & Metrics
 
-**Quick Stats Chart**:
-- Simple bar/line charts using Chart.js
-- 7-day or 30-day toggle
-- Responsive, aspect-ratio-video container
+**Hero Metrics**:
+```tsx
+<div className="p-12 border rounded-none">
+  <p className="text-xs uppercase tracking-widest mb-4">MONTHLY REVENUE</p>
+  <h2 className="text-5xl font-light font-cormorant">£142,500</h2>
+  <span className="text-sm mt-2">↑ 12.3%</span>
+</div>
+```
+- Border: 1px hairline, rounded-none
+- Hover: Subtle lift (translateY -2px), shadow
+- Grid: gap-12, never grid-cols-4
+
+**Timeline**:
+- Vertical line, w-4 h-4 dots left
+- Content: p-6, space-y-6
+- Client: Cormorant text-lg | Action: Inter text-sm
+- Timestamp: text-xs uppercase tracking-wide
 
 ### Data Tables
-**Client List / Visit Log**:
-- Sticky header row
-- Sortable columns (click header)
-- Row actions on right: Edit, View, Delete icons
-- Alternating row backgrounds for scan-ability
-- Pagination controls at bottom
-- Mobile: Card view instead of table
 
-**Table Density**:
-- Row height: h-12 (comfortable click targets)
-- Cell padding: px-4 py-3
+**Structure**:
+```tsx
+Row: h-16, px-6 py-4
+Headers: Sticky, text-xs uppercase tracking-widest
+Dividers: 1px hairline (optional)
+Actions: Right-aligned, w-5 h-5 icons
+```
+- Mobile: Transform to card view, maintain p-6
+- Empty state: Centered illustration + Cormorant headline
 
 ### Forms
-**Visit Logging Form**:
-- Single-column on mobile, two-column on desktop
-- Field groups with clear labels
-- Input heights: h-12 for text, h-32 for textarea
-- Dropdown selects for client selection (searchable)
-- Date/time pickers native HTML5
-- Photo upload with preview thumbnails
-- Submit button: Full width mobile, auto desktop
 
-**Validation**:
-- Inline error messages (text-sm text-red-600)
-- Success states with checkmark icon
-- Required field indicators (asterisk)
+**Layout** (max-w-xl):
+```tsx
+<form className="space-y-8">
+  <label className="text-sm uppercase tracking-wide">Client Name</label>
+  <input className="h-14 px-6 border-2 rounded-none w-full" />
+</form>
+```
+- Inputs: h-14, border-2, rounded-none
+- Textarea: min-h-32
+- Photo upload: Dashed border, grid-cols-3 gap-4 previews
+- Validation: text-sm below field with icon
+- Focus: Border 2px→3px transition
 
-### Modals & Overlays
-**Quick Add Modal**:
-- Centered, max-w-lg
-- Backdrop blur effect (backdrop-blur-sm)
-- Close button top-right
-- Action buttons bottom-right
-- Padding: p-6
+### Buttons
 
-**Confirmation Dialogs**:
-- Compact, max-w-sm
-- Icon at top (warning/info)
-- Two-button layout: Cancel (ghost) + Confirm (primary)
+**Primary**:
+```tsx
+<button className="h-14 px-8 rounded-none text-sm uppercase tracking-widest font-medium">
+  Save Visit
+</button>
+```
 
-### Buttons & Actions
-**Primary Action**: 
-- Solid fill, rounded-lg
-- Height: h-12 (mobile), h-10 (desktop)
-- Padding: px-6
-- Font: text-base font-medium
+**Secondary**: Same + border-2, transparent background
 
-**Secondary Actions**:
-- Border outline, transparent background
-- Same sizing as primary
+**Icon Buttons**: w-12 h-12 square, w-6 h-6 icon
 
-**Icon Buttons**:
-- Square, w-10 h-10
-- Icon size: w-5 h-5
-- Rounded-md
+**FAB** (mobile only): w-16 h-16 rounded-full, bottom-right fixed, shadow-2xl
 
-**FAB (Floating Action Button)** - Mobile only:
-- Bottom-right, fixed position
-- "Add Visit" primary action
-- w-14 h-14, rounded-full
-- Shadow: shadow-lg
+### Modals
 
-### Status Indicators
-**Visit Status Badges**:
-- Completed: Subtle green background
-- Pending: Yellow background
-- Cancelled: Gray background
-- Padding: px-3 py-1, rounded-full
-- Text: text-xs font-medium uppercase
+```tsx
+<div className="backdrop-blur-md">
+  <div className="max-w-2xl p-12">
+    <h2 className="text-3xl font-light font-cormorant text-center">Confirm Delete</h2>
+    <div className="text-center mt-6">...</div>
+    <div className="flex justify-end gap-4 mt-8">...</div>
+  </div>
+</div>
+```
+- Close: Top-right X, w-6 h-6
+- Confirmations: max-w-md p-8, centered icon (w-12 h-12)
+
+### Status Badges
+
+```tsx
+<span className="px-4 py-2 rounded-full text-xs uppercase tracking-wider font-medium">
+  Completed
+</span>
+```
+States: Completed, Scheduled, Cancelled, Follow-up, VIP, High-Value, New, At-Risk
 
 ---
 
 ## Images
 
-**Dashboard Hero**: None - prioritize data visibility immediately
+**Login Hero**: Full-bleed (100vh desktop, 60vh mobile)
+- Overlay: backdrop-blur-lg
+- Form: p-12 max-w-md centered
 
-**Empty States**: 
-- Illustration placeholders when no data exists
-- 200x200px centered illustrations
-- Friendly message + CTA button beneath
+**Empty States**: 240x240px line illustrations, Cormorant text-2xl headline
 
-**Client Profiles**:
-- Avatar placeholders (w-12 h-12 rounded-full)
-- Initials if no photo available
+**Avatars**: w-16 h-16 rounded-full, 1px border, Cormorant initials fallback
 
-**Visit Photos**:
-- Grid display, 2 columns mobile, 4 desktop
-- Aspect ratio: aspect-square
-- Lightbox on click for full view
+**Visit Photos**: grid-cols-2 md:grid-cols-4 gap-4, aspect-square, 1px border
+
+**Photography Style**: Clean, bright, natural light, minimal props, British sophistication. Avoid busy backgrounds.
 
 ---
 
 ## Accessibility
 
-- Minimum touch targets: 44x44px (Mobile)
-- Focus indicators: 2px outline offset
-- ARIA labels for icon-only buttons
-- Semantic HTML: nav, main, article, aside
-- Skip to main content link
-- Form labels explicitly tied to inputs
+- **Touch Targets**: 44px minimum (mobile), 48px preferred
+- **Focus**: 2px outline, 4px offset
+- **ARIA**: All icon-only buttons labeled
+- **Semantic HTML**: nav, main, article, section
+- **Forms**: Explicit label connection, never placeholder-only
+- **Contrast**: WCAG AA minimum
+- **Screen Readers**: Professional descriptive text
 
 ---
 
 ## Animations
 
-**Minimal, purposeful only**:
-- Page transitions: None (instant for speed)
-- Modal entry: Fade in, 200ms duration
-- Success feedback: Checkmark scale animation, 300ms
-- Loading states: Spinner or skeleton screens
-- No scroll-triggered animations
+**Philosophy**: Sparingly applied, refined execution. Utility first.
+
+```css
+Modal Entrance: fade + scale, 300ms ease-out
+Button Hovers: fill transition, 200ms
+Card Hovers: translateY(-2px) + shadow, 250ms
+Form Success: checkmark draw, 400ms
+Loading: Subtle shimmer skeleton or minimalist spinner
+Data Updates: Fade transitions
+```
+
+**NO**: Scroll-triggered animations (maintains professional restraint)
+
+**Loading States**: Hairline skeleton borders with subtle shimmer OR thin circular spinner
+
+---
+
+## Key Dos & Don'ts
+
+**DO**:
+- ✓ Use generous spacing (double between sections)
+- ✓ Apply rounded-none for sharp British aesthetic (except mobile FAB, badges)
+- ✓ Maintain 1px hairline borders
+- ✓ Use Cormorant for elegance, Inter for clarity
+- ✓ Keep max-w-6xl for elegance (tables: max-w-7xl)
+- ✓ Apply uppercase tracking-widest to labels
+
+**DON'T**:
+- ✗ Grid-cols-4 metric cards (too crowded)
+- ✗ Edge-to-edge layouts without breathing room
+- ✗ Playful illustrations (use refined line art)
+- ✗ Aggressive animations or scroll effects
+- ✗ Max-w-7xl on standard content
+- ✗ Skip accessibility requirements for aesthetics
+
+---
+
+**This system transforms enterprise sales tracking into a premium experience: British luxury minimalism meets CRM efficiency. Every interaction feels refined while maintaining field representative speed and clarity.**

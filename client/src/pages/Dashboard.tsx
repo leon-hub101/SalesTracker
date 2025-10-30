@@ -5,13 +5,15 @@ import { useAuth } from '@/contexts/AuthContext';
 
 interface Visit {
   _id: string;
-  client: {
+  clientId: {
     _id: string;
     name: string;
+    address: string;
   };
-  agent: {
+  agentId: {
     _id: string;
     name: string;
+    email: string;
   };
   checkInTime: string;
   checkOutTime?: string;
@@ -70,23 +72,23 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold" data-testid="text-dashboard-title">Welcome back, {user?.name}!</h1>
-        <p className="text-muted-foreground">Here's what's happening with your sales today.</p>
+        <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide" data-testid="text-dashboard-title">Welcome back, {user?.name}</h1>
+        <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Today's Performance Overview</p>
       </div>
 
       {activeVisit && (
         <Card className="border-primary bg-primary/5">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-primary" />
+          <CardHeader className="p-8 pb-4">
+            <CardTitle className="flex items-center gap-3 text-sm uppercase tracking-widest font-medium text-foreground/70">
+              <Clock className="w-4 h-4 text-primary" />
               Active Visit
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <p className="font-medium">{activeVisit.client?.name || 'Unknown Client'}</p>
+          <CardContent className="px-8 pb-8">
+            <div className="space-y-3">
+              <p className="text-2xl font-serif font-light">{activeVisit.clientId?.name || 'Unknown Client'}</p>
               <p className="text-sm text-muted-foreground">
                 Started: {formatDateTime(activeVisit.checkInTime)}
               </p>
@@ -98,72 +100,61 @@ export default function Dashboard() {
         </Card>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Clients</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <Card className="border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-4">
+            <CardTitle className="text-sm uppercase tracking-widest font-medium text-foreground/70">Total Clients</CardTitle>
+            <Users className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" data-testid="text-total-clients">{totalClients}</div>
-            <p className="text-xs text-muted-foreground">Active customers</p>
+          <CardContent className="px-8 pb-8">
+            <div className="text-4xl lg:text-5xl font-light font-serif" data-testid="text-total-clients">{totalClients}</div>
+            <p className="text-xs text-foreground/60 mt-2 uppercase tracking-wider font-medium">Active customers</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Visits</CardTitle>
-            <MapPin className="h-4 w-4 text-muted-foreground" />
+        <Card className="border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-4">
+            <CardTitle className="text-sm uppercase tracking-widest font-medium text-foreground/70">Total Visits</CardTitle>
+            <MapPin className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" data-testid="text-total-visits">{totalVisits}</div>
-            <p className="text-xs text-muted-foreground">All time</p>
+          <CardContent className="px-8 pb-8">
+            <div className="text-4xl lg:text-5xl font-light font-serif" data-testid="text-total-visits">{totalVisits}</div>
+            <p className="text-xs text-foreground/60 mt-2 uppercase tracking-wider font-medium">All time</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Complaints</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+        <Card className="border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-4">
+            <CardTitle className="text-sm uppercase tracking-widest font-medium text-foreground/70">Complaints</CardTitle>
+            <FileText className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" data-testid="text-total-complaints">{totalComplaints}</div>
-            <p className="text-xs text-muted-foreground">Total logged</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Missed Orders</CardTitle>
-            <AlertCircle className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" data-testid="text-total-missed-orders">{totalMissedOrders}</div>
-            <p className="text-xs text-muted-foreground">Opportunities</p>
+          <CardContent className="px-8 pb-8">
+            <div className="text-4xl lg:text-5xl font-light font-serif" data-testid="text-total-complaints">{totalComplaints}</div>
+            <p className="text-xs text-foreground/60 mt-2 uppercase tracking-wider font-medium">Total logged</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
+      <Card className="border col-span-full lg:col-span-2">
+        <CardHeader className="p-8 pb-6">
+          <CardTitle className="flex items-center gap-3 text-sm uppercase tracking-widest font-medium text-foreground/70">
+            <TrendingUp className="w-4 h-4" />
             Recent Activity
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-8 pb-8">
           {recentVisits.length === 0 ? (
-            <p className="text-muted-foreground text-center py-8">No recent visits</p>
+            <p className="text-muted-foreground text-center py-12 text-sm uppercase tracking-wider">No recent visits</p>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {recentVisits.map((visit) => (
-                <div key={visit._id} className="flex items-center justify-between border-b pb-3 last:border-0">
+                <div key={visit._id} className="flex items-center justify-between border-b pb-4 last:border-0">
                   <div>
-                    <p className="font-medium">{visit.clientId?.name || 'Unknown Client'}</p>
-                    <p className="text-sm text-muted-foreground">{formatDateTime(visit.checkInTime)}</p>
+                    <p className="font-serif text-lg">{visit.clientId?.name || 'Unknown Client'}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{formatDateTime(visit.checkInTime)}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium">
+                    <p className="text-xs font-medium uppercase tracking-wider text-foreground/60">
                       {visit.checkOutTime ? 'Completed' : 'In Progress'}
                     </p>
                     <p className="text-sm text-muted-foreground">

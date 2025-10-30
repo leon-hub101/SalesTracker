@@ -124,11 +124,11 @@ export default function Clients() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Clients</h1>
-          <p className="text-muted-foreground">Manage your customer database</p>
+          <h1 className="text-3xl lg:text-5xl font-light font-serif tracking-wide">Clients</h1>
+          <p className="text-foreground/60 mt-3 text-sm uppercase tracking-widest font-medium">Manage your customer database</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>

@@ -2,84 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE */
+/* Jo Malone-inspired typography */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* LIGHT MODE - Jo Malone Aesthetic */
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
+  --button-outline: rgba(44,44,44, .12);
+  --badge-outline: rgba(44,44,44, .06);
 
   /* Automatic computation of border around primary / danger buttons */
   --opaque-button-border-intensity: -8; /* In terms of percentages */
 
   /* Backgrounds applied on top of other backgrounds when hovered/active */
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --elevate-1: rgba(44,44,44, .04);
+  --elevate-2: rgba(44,44,44, .09);
 
-  --background: 0 0% 100%;
+  /* Jo Malone Cream Palette */
+  --background: 40 20% 96%;  /* Cream #F8F6F3 */
 
-  --foreground: 0 0% 9%;
+  --foreground: 0 0% 17%;  /* Charcoal #2C2C2C */
 
-  --border: 0 0% 89%;
+  --border: 40 10% 88%;  /* Soft border */
 
-  --card: 0 0% 98%;
+  --card: 0 0% 100%;  /* Pure white cards */
 
-  --card-foreground: 0 0% 9%;
+  --card-foreground: 0 0% 17%;  /* Charcoal text */
 
-  --card-border: 0 0% 94%;
+  --card-border: 40 15% 92%;  /* Subtle cream border */
 
-  --sidebar: 0 0% 96%;
+  --sidebar: 40 25% 97%;  /* Lighter cream sidebar */
 
-  --sidebar-foreground: 0 0% 9%;
+  --sidebar-foreground: 0 0% 17%;  /* Charcoal */
 
-  --sidebar-border: 0 0% 91%;
+  --sidebar-border: 40 12% 90%;
 
-  --sidebar-primary: 221 83% 53%;
+  --sidebar-primary: 35 36% 57%;  /* Gold #B8976A */
 
   --sidebar-primary-foreground: 0 0% 100%;
 
-  --sidebar-accent: 0 0% 93%;
+  --sidebar-accent: 40 18% 94%;
 
-  --sidebar-accent-foreground: 0 0% 9%;
+  --sidebar-accent-foreground: 0 0% 17%;
 
-  --sidebar-ring: 221 83% 53%;
+  --sidebar-ring: 35 36% 57%;
 
-  --popover: 0 0% 95%;
+  --popover: 0 0% 100%;
 
-  --popover-foreground: 0 0% 9%;
+  --popover-foreground: 0 0% 17%;
 
-  --popover-border: 0 0% 90%;
+  --popover-border: 40 12% 90%;
 
-  --primary: 221 83% 53%;
+  --primary: 35 36% 57%;  /* Jo Malone Gold */
 
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 92%;
+  --secondary: 40 15% 94%;  /* Soft cream */
 
-  --secondary-foreground: 0 0% 9%;
+  --secondary-foreground: 0 0% 17%;
 
-  --muted: 220 6% 90%;
+  --muted: 40 12% 92%;
 
-  --muted-foreground: 0 0% 40%;
+  --muted-foreground: 0 0% 42%;
 
-  --accent: 220 8% 88%;
+  --accent: 40 15% 94%;
 
-  --accent-foreground: 0 0% 9%;
+  --accent-foreground: 0 0% 17%;
 
-  --destructive: 0 84% 48%;
+  --destructive: 0 38% 44%;  /* Understated red #9B4444 */
 
   --destructive-foreground: 0 0% 100%;
 
-  --input: 0 0% 70%;
-  --ring: 221 83% 53%;
-  --chart-1: 221 83% 53%;
-  --chart-2: 142 76% 36%;
-  --chart-3: 262 83% 58%;
-  --chart-4: 31 92% 55%;
-  --chart-5: 195 85% 48%;
+  --input: 40 8% 75%;
+  --ring: 35 36% 57%;
+  --chart-1: 35 36% 57%;  /* Gold */
+  --chart-2: 143 26% 39%;  /* Muted green */
+  --chart-3: 216 16% 50%;  /* Soft blue-grey */
+  --chart-4: 42 48% 59%;  /* Warm gold */
+  --chart-5: 0 38% 44%;  /* Muted red */
 
-  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: "JetBrains Mono", Menlo, monospace;
-  --radius: .5rem; /* 8px */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', Menlo, monospace;
+  --radius: 0rem; /* Sharp corners - Jo Malone aesthetic */
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.08);
   --shadow-sm: 0px 2px 4px -1px hsl(0 0% 0% / 0.06), 0px 1px 2px -1px hsl(0 0% 0% / 0.08);
@@ -132,67 +136,68 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: 0 0% 7%;
+  /* Dark Mode - Inverted luxury with gold accents */
+  --background: 0 0% 10%;  /* Soft black */
 
-  --foreground: 0 0% 98%;
+  --foreground: 40 15% 94%;  /* Cream text */
 
-  --border: 0 0% 18%;
+  --border: 0 0% 20%;
 
-  --card: 0 0% 9%;
+  --card: 0 0% 13%;  /* Dark charcoal cards */
 
-  --card-foreground: 0 0% 98%;
+  --card-foreground: 40 15% 94%;
 
-  --card-border: 0 0% 13%;
+  --card-border: 0 0% 18%;
 
-  --sidebar: 0 0% 11%;
+  --sidebar: 0 0% 12%;
 
-  --sidebar-foreground: 0 0% 98%;
+  --sidebar-foreground: 40 15% 94%;
 
-  --sidebar-border: 0 0% 16%;
+  --sidebar-border: 0 0% 18%;
 
-  --sidebar-primary: 221 83% 53%;
+  --sidebar-primary: 35 36% 57%;  /* Gold accent */
 
-  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-primary-foreground: 0 0% 10%;
 
-  --sidebar-accent: 0 0% 14%;
+  --sidebar-accent: 0 0% 16%;
 
-  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-accent-foreground: 40 15% 94%;
 
-  --sidebar-ring: 221 83% 53%;
+  --sidebar-ring: 35 36% 57%;
 
-  --popover: 0 0% 12%;
+  --popover: 0 0% 14%;
 
-  --popover-foreground: 0 0% 98%;
+  --popover-foreground: 40 15% 94%;
 
-  --popover-border: 0 0% 17%;
+  --popover-border: 0 0% 20%;
 
-  --primary: 221 83% 53%;
+  --primary: 35 36% 57%;  /* Gold */
 
-  --primary-foreground: 0 0% 100%;
+  --primary-foreground: 0 0% 10%;
 
-  --secondary: 0 0% 15%;
+  --secondary: 0 0% 18%;
 
-  --secondary-foreground: 0 0% 98%;
+  --secondary-foreground: 40 15% 94%;
 
-  --muted: 220 6% 17%;
+  --muted: 0 0% 20%;
 
-  --muted-foreground: 0 0% 65%;
+  --muted-foreground: 40 8% 70%;
 
-  --accent: 220 8% 19%;
+  --accent: 0 0% 22%;
 
-  --accent-foreground: 0 0% 98%;
+  --accent-foreground: 40 15% 94%;
 
-  --destructive: 0 84% 48%;
+  --destructive: 0 38% 54%;  /* Lighter red for dark mode */
 
   --destructive-foreground: 0 0% 100%;
 
-  --input: 0 0% 35%;
-  --ring: 221 83% 53%;
-  --chart-1: 221 83% 63%;
-  --chart-2: 142 76% 46%;
-  --chart-3: 262 83% 68%;
-  --chart-4: 31 92% 65%;
-  --chart-5: 195 85% 58%;
+  --input: 0 0% 30%;
+  --ring: 35 36% 57%;
+  --chart-1: 35 36% 67%;  /* Lighter gold for dark mode */
+  --chart-2: 143 26% 49%;  /* Lighter green */
+  --chart-3: 216 16% 60%;  /* Lighter blue-grey */
+  --chart-4: 42 48% 69%;  /* Lighter warm gold */
+  --chart-5: 0 38% 54%;  /* Lighter red */
 
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.3);
   --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.4);

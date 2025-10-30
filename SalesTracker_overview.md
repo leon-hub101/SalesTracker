@@ -19,6 +19,14 @@
 
 **SalesTrackr** is a full-stack field sales tracking application designed for mobile-first use by field sales representatives. It manages clients, visits, sales data, depots, training logs, missed orders, and product complaints.
 
+### Design Philosophy
+SalesTrackr features a **Jo Malone-inspired design aesthetic** that brings British luxury minimalism to enterprise software. The application combines:
+- **Cream, charcoal, and gold color palette** (#F8F6F3, #2C2C2C, #B8976A)
+- **Elegant typography** with Cormorant Garamond serif for headings and metrics
+- **Generous whitespace** and refined spacing for sophisticated presentation
+- **Sharp corners** and hairline borders reflecting Jo Malone's packaging aesthetic
+- **Enterprise functionality** without sacrificing the refined, understated luxury feel
+
 ### Key Features
 - Client relationship management with geolocation
 - Visit tracking with check-in/check-out functionality
@@ -28,6 +36,7 @@
 - Product complaint management
 - Mobile-optimized interface for field use
 - Real-time data synchronization
+- Luxury-inspired UI with professional enterprise capabilities
 
 ---
 
