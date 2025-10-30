@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import { requireAuth, requireAdmin } from "./middleware/auth";
+import { requireAuth, requireAdmin } from "../api/lib/auth";
 import {
   registerSchema,
   loginSchema,
