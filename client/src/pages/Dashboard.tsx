@@ -86,7 +86,7 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <p className="font-medium">{activeVisit.client.name}</p>
+              <p className="font-medium">{activeVisit.client?.name || 'Unknown Client'}</p>
               <p className="text-sm text-muted-foreground">
                 Started: {formatDateTime(activeVisit.checkInTime)}
               </p>
@@ -159,7 +159,7 @@ export default function Dashboard() {
               {recentVisits.map((visit) => (
                 <div key={visit._id} className="flex items-center justify-between border-b pb-3 last:border-0">
                   <div>
-                    <p className="font-medium">{visit.client.name}</p>
+                    <p className="font-medium">{visit.clientId?.name || 'Unknown Client'}</p>
                     <p className="text-sm text-muted-foreground">{formatDateTime(visit.checkInTime)}</p>
                   </div>
                   <div className="text-right">

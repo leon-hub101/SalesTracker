@@ -142,7 +142,7 @@ export default function MissedOrders() {
                     <SelectValue placeholder="Select a client" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">No Client</SelectItem>
+                    <SelectItem value="none">No Client</SelectItem>
                     {clientsData?.clients?.map((client) => (
                       <SelectItem key={client._id} value={client._id}>
                         {client.name}

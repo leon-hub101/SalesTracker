@@ -42,8 +42,32 @@ connectDB();
 const app = express();
 
 // Security and CORS middleware
-app.use(helmet());
-app.use(cors());
+const isDev = app.get("env") === "development";
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        ...(isDev ? ["'unsafe-eval'", "'unsafe-inline'"] : [])
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'" // Required for CSS-in-JS and Vite HMR
+      ],
+      connectSrc: [
+        "'self'",
+        ...(isDev ? ["ws:", "wss:"] : []) // WebSocket for HMR
+      ],
+      imgSrc: ["'self'", "data:", "blob:"],
+      fontSrc: ["'self'", "data:"],
+    },
+  },
+}));
+app.use(cors({
+  origin: true, // Allow all origins in development
+  credentials: true, // Allow cookies and session
+}));
 
 declare module 'http' {
   interface IncomingMessage {
@@ -58,15 +82,20 @@ app.use(express.json({
 app.use(express.urlencoded({ extended: false }));
 
 // Session middleware
+// Note: In Replit, we're always on HTTPS (even in dev), so secure must be true
+const isProduction = process.env.NODE_ENV === 'production';
+const isReplit = process.env.REPL_ID !== undefined;
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProduction || isReplit, // Secure in production OR in Replit (which uses HTTPS)
     httpOnly: true,
+    sameSite: isProduction ? 'strict' : 'lax', // 'lax' allows cookies in dev with CORS
     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-  }
+  },
+  proxy: isReplit || isProduction, // Trust proxy in Replit/production
 }));
 
 app.use((req, res, next) => {

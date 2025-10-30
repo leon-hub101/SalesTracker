@@ -189,7 +189,7 @@ export default function Visits() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <p className="font-medium text-lg">{activeVisit.client.name}</p>
+              <p className="font-medium text-lg">{activeVisit.clientId?.name || 'Unknown Client'}</p>
               <p className="text-sm text-muted-foreground">
                 Started: {formatDateTime(activeVisit.checkInTime)}
               </p>
@@ -206,8 +206,8 @@ export default function Visits() {
           <Card key={visit._id} data-testid={`card-visit-${visit._id}`}>
             <CardContent className="flex items-center justify-between p-6">
               <div className="flex-1">
-                <h3 className="font-semibold text-lg">{visit.client.name}</h3>
-                <p className="text-sm text-muted-foreground">Agent: {visit.agent.name}</p>
+                <h3 className="font-semibold text-lg">{visit.clientId?.name || 'Unknown Client'}</h3>
+                <p className="text-sm text-muted-foreground">Agent: {visit.agentId?.name || 'Unknown Agent'}</p>
                 <div className="flex gap-4 mt-2">
                   <p className="text-sm">
                     <span className="font-medium">Check-in:</span> {formatDateTime(visit.checkInTime)}

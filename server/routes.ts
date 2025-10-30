@@ -69,15 +69,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       await user.save();
 
-      // Return user without password
-      const userResponse = {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      };
+      // Set session to log user in immediately after registration
+      req.session.userId = String(user._id);
+      req.session.userRole = user.role;
 
-      res.status(201).json({ user: userResponse, message: "User registered successfully" });
+      // Save the session before responding
+      req.session.save((err) => {
+        if (err) {
+          console.error("Session save error during registration:", err);
+          return res.status(500).json({ error: "Registration failed" });
+        }
+
+        // Return user without password
+        const userResponse = {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
+
+        res.status(201).json({ user: userResponse, message: "User registered successfully" });
+      });
     } catch (error: any) {
       if (error.name === 'ZodError') {
         return res.status(400).json({ error: "Validation error", details: error.errors });
@@ -283,6 +295,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get active visit for current agent (must come before /:id route)
+  app.get("/api/visits/active", requireAuth, async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const visit = await Visit.findOne({
+        agentId: req.session.userId,
+        checkOutTime: null
+      }).populate('clientId', 'name address');
+
+      res.json({ visit: visit || null });
+    } catch (error: any) {
+      console.error("Get active visit error:", error);
+      res.status(500).json({ error: "Failed to get active visit" });
+    }
+  });
+
   // Get single visit
   app.get("/api/visits/:id", requireAuth, async (req, res) => {
     try {
@@ -380,24 +411,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get active visit for current user
-  app.get("/api/visits/active", requireAuth, async (req, res) => {
-    try {
-      if (!req.session.userId) {
-        return res.status(401).json({ error: "Not authenticated" });
-      }
-
-      const visit = await Visit.findOne({
-        agentId: req.session.userId,
-        checkOutTime: null
-      }).populate('clientId', 'name address');
-
-      res.json({ visit: visit || null });
-    } catch (error: any) {
-      console.error("Get active visit error:", error);
-      res.status(500).json({ error: "Failed to get active visit" });
-    }
-  });
-
   // ===== DEPOT MANAGEMENT ENDPOINTS =====
 
   // Get all depots
