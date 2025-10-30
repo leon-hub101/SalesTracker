@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import session from "express-session";
+import "./types";
 
 // Load environment variables
 dotenv.config();
@@ -54,6 +56,18 @@ app.use(express.json({
   }
 }));
 app.use(express.urlencoded({ extended: false }));
+
+// Session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  }
+}));
 
 app.use((req, res, next) => {
   const start = Date.now();
