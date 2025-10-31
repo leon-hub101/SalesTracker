@@ -6,9 +6,9 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  root: "client",
+  root: ".",
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
+    outDir: path.resolve(__dirname, "../dist/public"),
     emptyOutDir: true,
   },
   server: {
@@ -18,10 +18,18 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"), // Points to client/src/
-      "@components": path.resolve(__dirname, "client/src/components"), // New alias for components
-      "@shared": path.resolve(__dirname, "shared"),
-      "@lib": path.resolve(__dirname, "lib"),
+      "@components": path.resolve(__dirname, "src/components"), // New alias for components
+      "@shared": path.resolve(__dirname, "../shared"),
+      "@contexts": path.resolve(__dirname, "src/contexts"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
+      "@ui": path.resolve(__dirname, "src/components/ui"),
+      "@api": path.resolve(__dirname, "../api"),           
+      "@lib": path.resolve(__dirname, "../lib")
     },
+  },
+    css: {
+    postcss: "./postcss.config.cjs",
   },
 });
 
