@@ -16,8 +16,30 @@
     "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {
-      "@/*": ["./client/src/*"],
-      "@shared/*": ["./shared/*"]
+      "@shared/*": ["./shared/*"],
+      "@lib/*": ["api/lib/*"],
+      "@/*": ["ui/*"],
+      "@api/*": ["api/*"],
+      "@server/*": ["server/*"],
+      "@client/*": ["client/src/*"],
+      "@components/*": ["client/src/components/*"],
+      "@hooks/*": ["client/src/hooks/*"],
+      "@styles/*": ["client/src/styles/*"],
+      "@config/*": ["client/src/config/*"],
+      "@utils/*": ["client/src/utils/*"],
+      "@contexts/*": ["client/src/contexts/*"],
+      "@pages/*": ["client/src/pages/*"],
+      "@routes/*": ["client/src/routes/*"],
+      "@services/*": ["client/src/services/*"],
+      "@stores/*": ["client/src/stores/*"],
+      "@assets/*": ["client/src/assets/*"],
+      "@widgets/*": ["client/src/components/widgets/*"],
+      "@ui/*": ["client/src/components/ui/*"],
+      "@layouts/*": ["client/src/components/layouts/*"],
+      "@features/*": ["client/src/components/features/*"],
+      "@modules/*": ["client/src/components/modules/*"],
+      "@elements/*": ["client/src/components/elements/*"],
+      "@containers/*": ["client/src/components/containers/*"],
     }
   }
 }
