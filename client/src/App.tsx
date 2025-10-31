@@ -1,22 +1,22 @@
 import { Switch, Route } from "wouter";
 import { queryClient } from "../../api/lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { AppSidebar } from "@/components/app-sidebar";
-import NotFound from "@/pages/not-found";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Dashboard from "@/pages/Dashboard";
-import Clients from "@/pages/Clients";
-import Visits from "@/pages/Visits";
-import Depots from "@/pages/Depots";
-import MissedOrders from "@/pages/MissedOrders";
-import TrainingLogs from "@/pages/TrainingLogs";
-import Complaints from "@/pages/Complaints";
+import { Toaster } from "@components/ui/toaster";
+import { TooltipProvider } from "@components/ui/tooltip";
+import { SidebarProvider, SidebarTrigger } from "@components/ui/sidebar";
+import { AuthProvider, useAuth } from "@contexts/AuthContext";
+import { ProtectedRoute } from "@components/ProtectedRoute";
+import { AppSidebar } from "@components/app-sidebar";
+import NotFound from "@pages/not-found";
+import Login from "@pages/Login";
+import Register from "@pages/Register";
+import Dashboard from "@pages/Dashboard";
+import Clients from "@pages/Clients";
+import Visits from "@pages/Visits";
+import Depots from "@pages/Depots";
+import MissedOrders from "@pages/MissedOrders";
+import TrainingLogs from "@pages/TrainingLogs";
+import Complaints from "@pages/Complaints";
 
 function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
