@@ -9,11 +9,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
-} from "@/components/ui/sidebar";
+} from "@components/ui/sidebar";
 import { Link, useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAuth } from "@contexts/AuthContext";
+import { Button } from "@components/ui/button";
+import { Avatar, AvatarFallback } from "@components/ui/avatar";
 
 const menuItems = [
   {

@@ -9,11 +9,11 @@ dotenv.config();
 import mongoose from "mongoose";
 import authRouter from "./auth";
 import clientsRouter from "./clients";
-//import visitsRouter from "./visits";
-//import depotsRouter from "./depots";
-//import missedOrdersRouter from "./missed-orders";
-//import trainingLogsRouter from "./training-logs";
-//import productComplaintsRouter from "./product-complaints";
+import visitsRouter from "../client/src/pages/visits";
+import depotsRouter from "../client/src/pages/depots";
+import missedOrdersRouter from "../client/src/pages/missedOrders";
+import trainingLogsRouter from "../client/src/pages/trainingLogs";
+import productComplaintsRouter from "../client/src/pages/Complaints";
 
 const app = express();
 
@@ -27,8 +27,6 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-
-console.log("DATABASE_URL:", process.env.MONGODB_URI);
 
 // MongoDB
 mongoose
